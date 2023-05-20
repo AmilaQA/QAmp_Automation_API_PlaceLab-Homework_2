@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "780e5678-6018-43a0-bc46-f904d3d5ccff",
+		"name": "PlaceLab_API_Smoke_Create_Incident_Area",
+		"description": "StartFragment\n\n_**SMOKE TEST for PlaceLab Incident Area functionality:**_\n\n- Url for Incident Area page is accessible;\n- Create new Incident Area report;\n- Retrieve and check the report details from previously created Incident area;\n- Delete previously created Incident Area (By ID);\n- Check if previous deletion was successful.\n    \n\nEndFragment\n\n_**Given:**_\n\nAn API endpoint for PlaceLab Incident area is available.\n\nPostman collection and environment are created.\n\n_**When:**_\n\n- Send a request to the PlaceLab API to retrieve valid token that is going to be used for further actions - POST request.\n- Send a request to create a new Incident Area in the PlaceLab API - POST request. This method is used 3 times to create 3 Incident areas.\n- Send a request to retrieve the details of all Incident Areas - GET request.\n- Send a request to retrive the details one of previously created Incident Area by ID. - GET request.\n- Send a request to delete a specific Incident area.\n    \n\n_**Then:**_\n\n- Verify that the response for token is successful (200 status code).\n- Verify that the response for creating a new Incident Area is successful (201 status code) and the returned data is not empty.\n- Verify that the response for retrieving the details of a specific place is successful (200 status code) and the returned Incident area information matches the requested Incident area ID.\n- Verify that the response for deleting a specific place is successful (204 status code) and the place no longer exists in the PlaceLab.\n    \n\nIn each iteration:\n\n- Record the response time for each request.\n- Track the total duration of the smoke test.\n- Count the number of passed and failed steps.\n    \n\nEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24657427",
+		"_collection_link": "https://interstellar-robot-943596.postman.co/workspace/f3094a4b-66e2-4ce8-9919-18cc22c1edf8/collection/24657427-780e5678-6018-43a0-bc46-f904d3d5ccff?action=share&creator=24657427&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Valid credentials-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"{{email}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/sessions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Incident Area 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify response body elements\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var Id = jsonData.id;\r",
+							"\r",
+							"pm.environment.set(\"Id\", Id);\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Response has 'id' property\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'id' value is a number\", function () {\r",
+							"    pm.expect(responseBody.id).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'name' value is 'Chicago'\", function () {\r",
+							"    pm.expect(responseBody.name).to.equal(\"Chicago\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'timezone' value is 'America/New_York'\", function () {\r",
+							"    pm.expect(responseBody.timezone).to.equal(\"America/New_York\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Chicago\",\r\n    \"sw_lat\": \"40.7\",\r\n    \"sw_lng\": \"-74.1\",\r\n    \"ne_lat\": \"40.73\",\r\n    \"ne_lng\": \"-73.9\",\r\n    \"location_name\": \"Somewhere\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve details previously created Incident Area by Id (IA 1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body as JSON\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"// Assert the response properties\r",
+							"pm.test(\"Response has the required properties\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"id\");\r",
+							"    pm.expect(responseBody).to.have.property(\"name\");\r",
+							"    pm.expect(responseBody).to.have.property(\"location_name\");\r",
+							"    pm.expect(responseBody).to.have.property(\"sw_lat\");\r",
+							"    pm.expect(responseBody).to.have.property(\"sw_lng\");\r",
+							"    pm.expect(responseBody).to.have.property(\"ne_lat\");\r",
+							"    pm.expect(responseBody).to.have.property(\"ne_lng\");\r",
+							"    pm.expect(responseBody).to.have.property(\"timezone\");\r",
+							"});\r",
+							"\r",
+							"// Assert specific property values\r",
+							"pm.test(\"Verify specific property values\", function () {\r",
+							"    pm.expect(responseBody.name).to.equal(\"Chicago\");\r",
+							"    pm.expect(responseBody.location_name).to.equal(\"Somewhere\");\r",
+							"    pm.expect(responseBody.sw_lat).to.equal(\"40.7\");\r",
+							"    pm.expect(responseBody.sw_lng).to.equal(\"-74.1\");\r",
+							"    pm.expect(responseBody.ne_lat).to.equal(\"40.73\");\r",
+							"    pm.expect(responseBody.ne_lng).to.equal(\"-73.9\");\r",
+							"    pm.expect(responseBody.timezone).to.equal(\"America/New_York\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas/{{Id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Inc Area by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Assertion\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas/{{Id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check if Inc Area by Id is deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verify the response status code\r",
+							"pm.test(\"Verify report deletion\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    var message = jsonData.error;\r",
+							"    \r",
+							"    // Verify if the error message contains the expected text\r",
+							"    pm.test(\"Message should contain the expected text\", function () {\r",
+							"        pm.expect(message).to.include(\"Incident Area not found with provided id\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas/{{Id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Incident Area 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify response body elements\r",
+							"pm.test(\"Verify that Report is successfully created\", () => {\r",
+							"pm.expect(pm.response.code).to.eql(201); \r",
+							"});\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Response has 'id' property\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'id' value is a number\", function () {\r",
+							"    pm.expect(responseBody.id).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'name' value is 'New York'\", function () {\r",
+							"    pm.expect(responseBody.name).to.equal(\"New York\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'timezone' value is 'America/New York'\", function () {\r",
+							"    pm.expect(responseBody.timezone).to.equal(\"America/New_York\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"New York\",\r\n    \"sw_lat\": \"40.7\",\r\n    \"sw_lng\": \"-74.1\",\r\n    \"ne_lat\": \"40.73\",\r\n    \"ne_lng\": \"-73.9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Incident Area 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify response body elements\r",
+							"pm.test(\"Verify that Report is successfully created\", () => {\r",
+							"\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"   \r",
+							"});\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Response has 'id' property\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'id' value is a number\", function () {\r",
+							"    pm.expect(responseBody.id).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'name' value is 'Washington'\", function () {\r",
+							"    pm.expect(responseBody.name).to.equal(\"Washington\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response 'timezone' value is 'America/New_York'\", function () {\r",
+							"    pm.expect(responseBody.timezone).to.equal(\"America/New_York\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Washington\",\r\n    \"sw_lat\": \"40.7\",\r\n    \"sw_lng\": \"-74.1\",\r\n    \"ne_lat\": \"40.73\",\r\n    \"ne_lng\": \"-73.9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Incident area",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Assertion\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Parse the response body as JSON\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"// Assert the response properties for each item in the array\r",
+							"pm.test(\"Response body is an array\", function () {\r",
+							"    pm.expect(responseBody).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each item has the required properties\", function () {\r",
+							"    responseBody.forEach(function (item) {\r",
+							"        pm.expect(item).to.have.property(\"id\");\r",
+							"        pm.expect(item).to.have.property(\"name\");\r",
+							"        pm.expect(item).to.have.property(\"location_name\");\r",
+							"        pm.expect(item).to.have.property(\"sw_lat\");\r",
+							"        pm.expect(item).to.have.property(\"sw_lng\");\r",
+							"        pm.expect(item).to.have.property(\"ne_lat\");\r",
+							"        pm.expect(item).to.have.property(\"ne_lng\");\r",
+							"        pm.expect(item).to.have.property(\"timezone\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/incident_areas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"incident_areas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
