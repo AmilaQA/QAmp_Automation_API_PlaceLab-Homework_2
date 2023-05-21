@@ -1,0 +1,462 @@
+{
+	"id": "e6a8ba23-09b4-46a7-a78b-cd33ef1e258e",
+	"name": "PlaceLab_API_Smoke_Create_Incident_Area",
+	"timestamp": "2023-05-20T21:44:51.382Z",
+	"collection_id": "24657427-780e5678-6018-43a0-bc46-f904d3d5ccff",
+	"folder_id": 0,
+	"environment_id": "24657427-92b36255-d674-47d9-9900-6f1816cb78f0",
+	"totalPass": 72,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-20T21:44:44.471Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "a5827458-a5eb-4757-ac69-c448810a5062",
+			"name": "Valid credentials-token",
+			"url": "https://demo.placelab.com/api/v2/sessions",
+			"time": 148,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				521,
+				147,
+				148
+			],
+			"allTests": [
+				{
+					"Status code is 201": true
+				},
+				{
+					"Status code is 201": true
+				},
+				{
+					"Status code is 201": true
+				}
+			]
+		},
+		{
+			"id": "db491dd9-0333-426b-8ffb-55bb01b238ac",
+			"name": "Create Incident Area 1",
+			"url": "https://demo.placelab.com/api/v2/incident_areas",
+			"time": 247,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Response has 'id' property": true,
+				"Response 'id' value is a number": true,
+				"Response 'name' value is 'Chicago'": true,
+				"Response 'timezone' value is 'America/New_York'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'id' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'id' value is a number": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'name' value is 'Chicago'": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'timezone' value is 'America/New_York'": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				270,
+				232,
+				247
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Chicago'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				},
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Chicago'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				},
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Chicago'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				}
+			]
+		},
+		{
+			"id": "5131ff0e-93cd-488d-95b8-e5a3ad493ebf",
+			"name": "Retrieve details previously created Incident Area by Id (IA 1)",
+			"url": "https://demo.placelab.com/api/v2/incident_areas/6962",
+			"time": 157,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response has the required properties": true,
+				"Verify specific property values": true
+			},
+			"testPassFailCounts": {
+				"Response has the required properties": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Verify specific property values": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				155,
+				158,
+				157
+			],
+			"allTests": [
+				{
+					"Response has the required properties": true,
+					"Verify specific property values": true
+				},
+				{
+					"Response has the required properties": true,
+					"Verify specific property values": true
+				},
+				{
+					"Response has the required properties": true,
+					"Verify specific property values": true
+				}
+			]
+		},
+		{
+			"id": "4e22a228-a716-42e2-bfee-231557cdd244",
+			"name": "Delete Inc Area by Id",
+			"url": "https://demo.placelab.com/api/v2/incident_areas/6962",
+			"time": 165,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 204": true
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				155,
+				155,
+				165
+			],
+			"allTests": [
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": true
+				}
+			]
+		},
+		{
+			"id": "9500cbf1-c948-4bfe-8f46-c54532ca0f36",
+			"name": "Check if Inc Area by Id is deleted",
+			"url": "https://demo.placelab.com/api/v2/incident_areas/6962",
+			"time": 152,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Message should contain the expected text": true,
+				"Verify report deletion": true
+			},
+			"testPassFailCounts": {
+				"Message should contain the expected text": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Verify report deletion": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				152,
+				152,
+				152
+			],
+			"allTests": [
+				{
+					"Message should contain the expected text": true,
+					"Verify report deletion": true
+				},
+				{
+					"Message should contain the expected text": true,
+					"Verify report deletion": true
+				},
+				{
+					"Message should contain the expected text": true,
+					"Verify report deletion": true
+				}
+			]
+		},
+		{
+			"id": "17f34c07-71b1-4bfb-8d5e-356073e9e307",
+			"name": "Create Incident Area 2",
+			"url": "https://demo.placelab.com/api/v2/incident_areas",
+			"time": 220,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Verify that Report is successfully created": true,
+				"Response has 'id' property": true,
+				"Response 'id' value is a number": true,
+				"Response 'name' value is 'New York'": true,
+				"Response 'timezone' value is 'America/New York'": true
+			},
+			"testPassFailCounts": {
+				"Verify that Report is successfully created": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'id' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'id' value is a number": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'name' value is 'New York'": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'timezone' value is 'America/New York'": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				256,
+				247,
+				220
+			],
+			"allTests": [
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'New York'": true,
+					"Response 'timezone' value is 'America/New York'": true
+				},
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'New York'": true,
+					"Response 'timezone' value is 'America/New York'": true
+				},
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'New York'": true,
+					"Response 'timezone' value is 'America/New York'": true
+				}
+			]
+		},
+		{
+			"id": "dbf660ae-5f3c-477f-90a2-bab77afa295c",
+			"name": "Create Incident Area 3",
+			"url": "https://demo.placelab.com/api/v2/incident_areas",
+			"time": 186,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Verify that Report is successfully created": true,
+				"Response has 'id' property": true,
+				"Response 'id' value is a number": true,
+				"Response 'name' value is 'Washington'": true,
+				"Response 'timezone' value is 'America/New_York'": true
+			},
+			"testPassFailCounts": {
+				"Verify that Report is successfully created": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'id' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'id' value is a number": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'name' value is 'Washington'": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'timezone' value is 'America/New_York'": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				249,
+				200,
+				186
+			],
+			"allTests": [
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Washington'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				},
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Washington'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				},
+				{
+					"Verify that Report is successfully created": true,
+					"Response has 'id' property": true,
+					"Response 'id' value is a number": true,
+					"Response 'name' value is 'Washington'": true,
+					"Response 'timezone' value is 'America/New_York'": true
+				}
+			]
+		},
+		{
+			"id": "85cea260-18e8-46ed-b802-aabd09a97dac",
+			"name": "Get All Incident area",
+			"url": "https://demo.placelab.com/api/v2/incident_areas",
+			"time": 156,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response body is an array": true,
+				"Each item has the required properties": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response body is an array": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Each item has the required properties": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				156,
+				156,
+				156
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response body is an array": true,
+					"Each item has the required properties": true
+				},
+				{
+					"Status code is 200": true,
+					"Response body is an array": true,
+					"Each item has the required properties": true
+				},
+				{
+					"Status code is 200": true,
+					"Response body is an array": true,
+					"Each item has the required properties": true
+				}
+			]
+		}
+	],
+	"count": 3,
+	"totalTime": 4792,
+	"collection": {
+		"requests": [
+			{
+				"id": "a5827458-a5eb-4757-ac69-c448810a5062",
+				"method": "POST"
+			},
+			{
+				"id": "db491dd9-0333-426b-8ffb-55bb01b238ac",
+				"method": "POST"
+			},
+			{
+				"id": "5131ff0e-93cd-488d-95b8-e5a3ad493ebf",
+				"method": "GET"
+			},
+			{
+				"id": "4e22a228-a716-42e2-bfee-231557cdd244",
+				"method": "DELETE"
+			},
+			{
+				"id": "9500cbf1-c948-4bfe-8f46-c54532ca0f36",
+				"method": "GET"
+			},
+			{
+				"id": "17f34c07-71b1-4bfb-8d5e-356073e9e307",
+				"method": "POST"
+			},
+			{
+				"id": "dbf660ae-5f3c-477f-90a2-bab77afa295c",
+				"method": "POST"
+			},
+			{
+				"id": "85cea260-18e8-46ed-b802-aabd09a97dac",
+				"method": "GET"
+			}
+		]
+	}
+}
